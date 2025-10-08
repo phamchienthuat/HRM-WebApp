@@ -26,9 +26,9 @@
 // body {
 // 	line-height: 1;
 // }
-// ol, ul {
-// 	list-style: none;
-// }
+ol, ul {
+	list-style: none;
+}
 // blockquote, q {
 // 	quotes: none;
 // }
@@ -41,3 +41,11 @@
 // 	border-collapse: collapse;
 // 	border-spacing: 0;
 // }
+h1, h2 , h3, h4, h5, h6, ol, ul, li, p {
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}

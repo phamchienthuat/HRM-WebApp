@@ -1,11 +1,25 @@
 <div class="sidebar">
-    <div class="logo-layout">
-        <div class="logo-layout-left">
-            <i data-feather="users"></i>
+    <div class="sidebar-layout">
+        <div class="logo-layout mb-4">
+            <div class="logo-layout-left">
+                <i-feather name="users"></i-feather>
+            </div>
+            <div class="logo-layout-right">
+                <h5>HRMS</h5>
+                <p>Dashboard</p>
+            </div>
         </div>
-        <div class="logo-layout-right">
-            <h3>HRMS</h3>
-            <p>Dashboard</p>
-        </div>
+        <nav class="menu">
+            <ul>
+                @for (item of menuItems; track item.id) {
+                <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a [routerLink]="item.link">
+                        <i-feather [name]="item.icon"></i-feather>
+                        <span>{{ item.label }}</span>
+                    </a>
+                </li>
+                }
+            </ul>
+        </nav>
     </div>
 </div>
