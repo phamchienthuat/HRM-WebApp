@@ -2,6 +2,82 @@
     width: 100%;
     height: 100vh;
     padding: 30px;
+    transition: all 0.3s ease;
+    border-right: 1px solid #ebeef2;
+    
+    &.collapsed {
+        padding: 30px 10px;
+        
+        .sidebar-layout {
+            align-items: center;
+        }
+        
+        .logo-layout {
+            justify-content: center;
+            margin-bottom: 1rem !important;
+            
+            .logo-layout-left {
+                margin: 0;
+            }
+        }
+        
+        .menu {
+            .menu-item {
+                justify-content: center;
+                padding: 12px;
+                position: relative;
+                
+                a {
+                    justify-content: center;
+                    
+                    i-feather {
+                        margin: 0;
+                    }
+                }
+                
+                &[data-tooltip]:hover::after {
+                    content: attr(data-tooltip);
+                    position: absolute;
+                    left: calc(100% + 15px);
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: #333;
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 6px;
+                    white-space: nowrap;
+                    z-index: 1000;
+                    font-size: 13px;
+                    font-weight: 500;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    animation: tooltipFadeIn 0.2s ease forwards;
+                }
+                
+                &[data-tooltip]:hover::before {
+                    content: '';
+                    position: absolute;
+                    left: calc(100% + 10px);
+                    top: 50%;
+                    transform: translateY(-50%);
+                    border: 5px solid transparent;
+                    border-right-color: #333;
+                    z-index: 1000;
+                    animation: tooltipFadeIn 0.2s ease forwards;
+                }
+            }
+        }
+    }
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
 }
 
 .logo-layout {
@@ -56,7 +132,7 @@
         }
 
         &:not(.active):hover {
-            background-color: #fbf9fa;
+            background-color: #ebebeb;
             cursor: pointer;
             transform: translateX(4px);
         }

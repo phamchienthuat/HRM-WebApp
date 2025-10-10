@@ -8,6 +8,11 @@
     background: #ffffff;
     flex-shrink: 0;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    transition: width 0.3s ease;
+    
+    &.collapsed {
+        width: 80px;
+    }
 }
 
 .layout-right {
@@ -24,9 +29,9 @@
 /* Toolbar luôn dính trên cùng, nhưng chỉ trong layout-right */
 .toolbar {
     position: sticky;
-    height: 50px;
+    height: auto;
     top: 0;
     z-index: 10;
-    background: rgb(210, 6, 6);
+    // background: rgb(210, 6, 6);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }

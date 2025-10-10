@@ -1,3 +1,16 @@
 <div class="toolbar">
-    <!-- toolbar -->
+    <div class="toolbar-layout">
+        <div class="menu-icon toggle" 
+             (click)="toggleSidebar()" 
+             [class.collapsed]="isCollapsed"
+             [title]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
+            <i-feather name="menu"></i-feather>
+        </div>
+        <div class="toolbar-right">
+            <div class="user-info">
+                <i-feather name="user"></i-feather>
+                <span>{{ userName }}</span>
+            </div>
+        </div>
+    </div>
 </div>

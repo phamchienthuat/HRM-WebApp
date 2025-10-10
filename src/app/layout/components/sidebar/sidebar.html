@@ -1,21 +1,28 @@
-<div class="sidebar">
+<div class="sidebar" [class.collapsed]="isCollapsed">
     <div class="sidebar-layout">
         <div class="logo-layout mb-4">
             <div class="logo-layout-left">
                 <i-feather name="users"></i-feather>
             </div>
+            @if (!isCollapsed) {
             <div class="logo-layout-right">
                 <h5>HRMS</h5>
                 <p>Dashboard</p>
             </div>
+            }
         </div>
         <nav class="menu">
             <ul>
                 @for (item of menuItems; track item.id) {
-                <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <li class="menu-item" 
+                    routerLinkActive="active" 
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    [attr.data-tooltip]="isCollapsed ? item.label : null">
                     <a [routerLink]="item.link">
                         <i-feather [name]="item.icon"></i-feather>
+                        @if (!isCollapsed) {
                         <span>{{ item.label }}</span>
+                        }
                     </a>
                 </li>
                 }
