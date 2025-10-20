@@ -1,0 +1,16 @@
+<mat-form-field appearance="outline">
+  <mat-label>{{ label }}</mat-label>
+  <input matInput [matDatepicker]="picker" [formControl]="formControl" [placeholder]="placeholder"
+    [(ngModel)]="innerValue" [attr.disabled]="disabled" [readonly]="readonly" [required]="required"
+    (dateChange)="onInputChange($event)" (keydown)="handleKeydown($event)" (blur)="handleBlur($event)" [min]="min"
+    [max]="max" />
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+
+  @if (required && formControl.hasError('required')) {
+  <mat-error>
+    {{ requiredMessage }}
+  </mat-error>
+  }
+
+</mat-form-field>

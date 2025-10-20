@@ -1,0 +1,15 @@
+<mat-radio-group
+  aria-labelledby="radio-group-label"
+  [(ngModel)]="innerValue"
+  (ngModelChange)="onChangeValue($event)"
+  [formControl]="formControl"
+  class="{{ className }}"
+>
+  <mat-radio-button
+    *ngFor="let option of options"
+    [value]="option.value"
+    [labelPosition]="labelPosition"
+  >
+    {{ option.label }}
+  </mat-radio-button>
+</mat-radio-group>

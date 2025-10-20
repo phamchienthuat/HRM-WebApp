@@ -1,0 +1,13 @@
+mdl-number {
+    .mat-form-field {
+        width: 100%;
+    }
+
+    .mat-placeholder-required {
+        color: red !important;
+    }
+
+    .app-main-content input.ng-invalid.ng-touched {
+        border: none !important;
+    }
+}

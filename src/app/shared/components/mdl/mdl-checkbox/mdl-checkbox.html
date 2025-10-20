@@ -1,0 +1,8 @@
+<mat-checkbox
+  [formControl]="formControl" 
+  (change)="onChangeValue($event)"
+  [checked]="checked"
+  [(ngModel)]="innerValue"
+>
+  {{label}}
+</mat-checkbox>

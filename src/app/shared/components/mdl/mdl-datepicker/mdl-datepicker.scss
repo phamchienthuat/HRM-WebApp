@@ -1,0 +1,13 @@
+mdl-datepicker {
+    .mat-form-field {
+        width: 100% !important;
+    }
+
+    .mat-placeholder-required {
+        color: red !important;
+    }
+
+    input.ng-invalid.ng-touched {
+        border: none !important;
+    }
+}

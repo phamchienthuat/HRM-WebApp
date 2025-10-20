@@ -1,0 +1,17 @@
+
+<mat-form-field appearance="outline" class="full-width position-relative">
+  <mat-label>{{label}} {{innerValue}}</mat-label>
+  <input
+    matInput
+    [(ngModel)]="innerValue"
+    [formControl]="formControl"
+    [ngxTimepicker]="timepicker"
+    [required]="required"
+  />
+  <ngx-material-timepicker-toggle class="timepicker--toggle-btn" [for]="timepicker"></ngx-material-timepicker-toggle>
+  <ngx-material-timepicker #timepicker [enableKeyboardInput]="true" (timeChanged)="onChangeValue($event)"></ngx-material-timepicker>
+
+  <mat-error *ngIf="required && formControl?.hasError('required')">
+    {{ requiredMessage }}
+  </mat-error>
+</mat-form-field>

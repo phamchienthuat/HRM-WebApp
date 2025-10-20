@@ -11,11 +11,14 @@ import { Subscription } from 'rxjs';
   styleUrl: './toolbar.scss'
 })
 export class Toolbar implements OnInit, OnDestroy {
-  userName = 'John Doe';
+  userName = '';
   isCollapsed = false;
   private subscription?: Subscription;
   
-  constructor(private sidebarService: SidebarService) {}
+  constructor(private sidebarService: SidebarService) {
+   let userName= localStorage.getItem('user') || '';
+    this.userName= JSON.parse(userName).username;
+  }
 
   ngOnInit(): void {
     this.subscription = this.sidebarService.isCollapsed$.subscribe(

@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline" [ngClass]="{'readonly': readonly}">
+  <mat-label>{{ label }}</mat-label>
+  <input [type]="type" matInput [formControl]="formControl" [placeholder]="placeholder" [(ngModel)]="innerValue"
+    [attr.disabled]="disabled" [readonly]="readonly" [required]="required" (input)="onInputChange($event)" mdlCurency
+    (keydown)="handleKeydown($event)" (blur)="handleBlur($event)" />
+
+  <mat-error *ngIf="required && formControl?.hasError('required')">
+    {{ requiredMessage }}
+  </mat-error>
+</mat-form-field>

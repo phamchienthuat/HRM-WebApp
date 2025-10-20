@@ -1,0 +1,15 @@
+mdl-select {
+    .mat-form-field {
+        width: 100% !important;
+    }
+
+    .mat-placeholder-required {
+        color: red !important;
+    }
+}
+.mdl-select-filter {
+    background-color: white !important;
+    .mat-pseudo-checkbox {
+        display: none !important;
+    }
+}

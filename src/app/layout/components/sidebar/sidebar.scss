@@ -29,6 +29,7 @@
                 
                 a {
                     justify-content: center;
+                    z-index: 1; // Ensure link is above pseudo-elements
                     
                     i-feather {
                         margin: 0;
@@ -46,11 +47,12 @@
                     padding: 8px 12px;
                     border-radius: 6px;
                     white-space: nowrap;
-                    z-index: 1000;
+                    z-index: 999; // Below the link
                     font-size: 13px;
                     font-weight: 500;
                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                     animation: tooltipFadeIn 0.2s ease forwards;
+                    pointer-events: none; // Prevent tooltip from blocking clicks
                 }
                 
                 &[data-tooltip]:hover::before {
@@ -61,8 +63,9 @@
                     transform: translateY(-50%);
                     border: 5px solid transparent;
                     border-right-color: #333;
-                    z-index: 1000;
+                    z-index: 999; // Below the link
                     animation: tooltipFadeIn 0.2s ease forwards;
+                    pointer-events: none; // Prevent arrow from blocking clicks
                 }
             }
         }
@@ -145,6 +148,7 @@
             width: 20px;
             height: 20px;
             transition: color 0.25s ease;
+            pointer-events: none; // Let clicks pass through to link
         }
 
         a {
@@ -152,11 +156,16 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            z-index: 1; // Ensure link is always clickable
         }
 
         span {
             line-height: 1;
             transition: color 0.25s ease;
+            pointer-events: none; // Let clicks pass through to link
         }
     }
 }
