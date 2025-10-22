@@ -23,11 +23,22 @@ import { HttpRequestOptions } from '../models/http-options.model';
   providedIn: 'root'
 })
 export class BaseHttpService {
-  private readonly baseUrl: string = environment.apiUrl;
-  private readonly defaultTimeout: number = environment.apiTimeout;
+  private readonly baseUrl: string;
+  private readonly defaultTimeout: number;
   private readonly maxRetries: number = 2;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // Configure based on environment
+    if (environment.production) {
+      // Production configuration
+      this.baseUrl = environment.apiUrl;
+      this.defaultTimeout = environment.apiTimeout || 30000; // Default 30 seconds for production
+    } else {
+      // Development configuration
+      this.baseUrl = environment.apiUrl;
+      this.defaultTimeout = environment.apiTimeout || 10000; // Default 10 seconds for development
+    }
+  }
 
   /**
    * GET request
@@ -322,7 +333,14 @@ export class BaseHttpService {
       errorMessage = this.getServerErrorMessage(error);
     }
 
-    if (environment.enableLogging) {
+    // Log errors based on environment
+    if (environment.production) {
+      // In production, log minimal error information
+      if (environment.enableLogging) {
+        console.error('HTTP Error:', errorMessage);
+      }
+    } else {
+      // In development, log detailed error information
       console.error('HTTP Error:', errorMessage, error);
     }
 

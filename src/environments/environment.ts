@@ -1,8 +1,8 @@
 export const environment = {
-  production: true,
+  production: false,
   apiUrl: 'http://localhost:4000',
   apiVersion: 'v1',
   apiTimeout: 30000, // 30 seconds
   enableLogging: true,
-  enableApiCache: true,
+  enableApiCache: false,
 };
