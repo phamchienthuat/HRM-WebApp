@@ -7,9 +7,16 @@
             <i-feather name="menu"></i-feather>
         </div>
         <div class="toolbar-right">
-            <div class="user-info">
-                <i-feather name="user"></i-feather>
-                <span>{{ userName }}</span>
+            <div class="user-info dropdown">
+                <a class="dropdown-toggle d-flex align-items-center" href="#" role="button" id="toolbarUserDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i-feather name="user"></i-feather>
+                    <span class="ms-2">{{ userName }}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="toolbarUserDropdown">
+                    <li><a class="dropdown-item" (click)="goToProfile()">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" (click)="logoutAPI()">Logout</a></li>
+                </ul>
             </div>
         </div>
     </div>
