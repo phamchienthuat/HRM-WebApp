@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Title } from '@angular/platform-browser';
+import { IconsModule } from '../../../../icons.module';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
@@ -16,6 +17,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   isLoading = signal(false);
   errorMessage = signal('');
+  showPassword = signal(false); // Toggle password visibility
 
   constructor(
     private formBuilder: FormBuilder,
@@ -83,5 +85,12 @@ export class LoginComponent {
       }
     }
     return '';
+  }
+
+  /**
+   * Toggle password visibility
+   */
+  togglePasswordVisibility() {
+    this.showPassword.set(!this.showPassword());
   }
 }

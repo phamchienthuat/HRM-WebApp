@@ -140,6 +140,47 @@
         color: #9ca3af;
       }
     }
+
+    // Password input wrapper with toggle button
+    .password-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .form-control {
+        padding-right: 48px; // Make room for the toggle button
+      }
+
+      .password-toggle-btn {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6b7280;
+        transition: color 0.2s ease-in-out;
+
+        &:hover {
+          color: #667eea;
+        }
+
+        &:focus {
+          outline: none;
+          color: #667eea;
+        }
+
+        i-feather {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
   }
 }
 
