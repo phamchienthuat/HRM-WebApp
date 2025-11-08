@@ -14,16 +14,79 @@
         <nav class="menu">
             <ul>
                 @for (item of menuItems; track item.id) {
-                <li class="menu-item" 
-                    routerLinkActive="active" 
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    [attr.data-tooltip]="isCollapsed ? item.label : null">
-                    <a [routerLink]="item.link">
-                        <i-feather [name]="item.icon"></i-feather>
-                        @if (!isCollapsed) {
-                        <span>{{ item.label }}</span>
+                <li class="menu-item-wrapper">
+                    <!-- Parent menu item -->
+                    <div class="menu-item" 
+                        [class.has-children]="hasChildren(item)"
+                        [class.expanded]="item.expanded"
+                        routerLinkActive="active" 
+                        [routerLinkActiveOptions]="{ exact: !hasChildren(item) }"
+                        [attr.data-tooltip]="isCollapsed ? item.label : null">
+                        @if (item.link && !hasChildren(item)) {
+                            <a [routerLink]="item.link">
+                                <i-feather [name]="item.icon"></i-feather>
+                                @if (!isCollapsed) {
+                                <span>{{ item.label }}</span>
+                                }
+                            </a>
+                        } @else {
+                            <a (click)="toggleSubmenu(item, $event)" [class.has-submenu]="hasChildren(item)">
+                                <i-feather [name]="item.icon"></i-feather>
+                                @if (!isCollapsed) {
+                                <span>{{ item.label }}</span>
+                                @if (hasChildren(item)) {
+                                <i-feather class="chevron" [name]="item.expanded ? 'chevron-down' : 'chevron-right'"></i-feather>
+                                }
+                                }
+                            </a>
                         }
-                    </a>
+                    </div>
+
+                    <!-- Submenu (first level children) -->
+                    @if (hasChildren(item) && item.expanded && !isCollapsed) {
+                    <ul class="submenu">
+                        @for (child of item.childrens; track child.id) {
+                        <li class="submenu-item-wrapper">
+                            <div class="submenu-item"
+                                [class.has-children]="hasChildren(child)"
+                                [class.expanded]="child.expanded"
+                                routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: !hasChildren(child) }">
+                                @if (child.link && !hasChildren(child)) {
+                                    <a [routerLink]="child.link">
+                                        <i-feather [name]="child.icon"></i-feather>
+                                        <span>{{ child.label }}</span>
+                                    </a>
+                                } @else {
+                                    <a (click)="toggleSubmenu(child, $event)" [class.has-submenu]="hasChildren(child)">
+                                        <i-feather [name]="child.icon"></i-feather>
+                                        <span>{{ child.label }}</span>
+                                        @if (hasChildren(child)) {
+                                        <i-feather class="chevron" [name]="child.expanded ? 'chevron-down' : 'chevron-right'"></i-feather>
+                                        }
+                                    </a>
+                                }
+                            </div>
+
+                            <!-- Nested submenu (second level children) -->
+                            @if (hasChildren(child) && child.expanded) {
+                            <ul class="nested-submenu">
+                                @for (nestedChild of child.childrens; track nestedChild.id) {
+                                <li class="nested-submenu-item"
+                                    routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{ exact: true }">
+                                    <a [routerLink]="nestedChild.link">
+                                        <i-feather [name]="nestedChild.icon"></i-feather>
+                                        <span>{{ nestedChild.label }}</span>
+                                    </a>
+                                </li>
+                                }
+                            </ul>
+                            }
+                        </li>
+                        }
+                    </ul>
+                    }
                 </li>
                 }
             </ul>

@@ -6,16 +6,36 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SidebarService } from '../../../shared/services/sidebar.service';
 import { Subscription } from 'rxjs';
 
+interface MenuItem {
+  id: number;
+  label: string;
+  icon: string;
+  link?: string;
+  childrens?: MenuItem[];
+  expanded?: boolean;
+}
+
 @Component({
   selector: 'app-sidebar',
-  imports: [IconsModule, CommonModule, RouterLink,RouterLinkActive],
+  imports: [IconsModule, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss'
 })
 export class Sidebar implements OnInit, OnDestroy {
-  public menuItems = [
+  public menuItems: MenuItem[] = [
     {id: 1, label: 'Dashboard', icon: 'home', link: '/dashboard' },
-    {id: 2,  label: 'Employees', icon: 'users', link: '/employees' },
+    {id: 2,  label: 'Employees', icon: 'users', link: '/employees',
+      expanded: false,
+      childrens: [
+        {id: 20, label: 'Business', icon: 'briefcase', expanded: false, childrens: [
+          {id: 21, label: 'All Employees', icon: 'users', link: '/employees/all' },
+          {id: 23, label: 'Employee Profile', icon: 'user', link: '/employees/profile' }
+        ]},
+        {id: 24, label: 'Management', icon: 'list', expanded: false, childrens: [
+          {id: 25, label: 'Add Employee', icon: 'user-plus', link: '/employees/add' }
+        ]}
+      ]
+    },
     {id: 3,  label: 'Departments', icon: 'grid', link: '/departments' },
     {id: 4,  label: 'Attendance', icon: 'check-square', link: '/attendance' },
     {id: 5,  label: 'Leave Management', icon: 'calendar', link: '/leave-management' },
@@ -33,6 +53,10 @@ export class Sidebar implements OnInit, OnDestroy {
     this.subscription = this.sidebarService.isCollapsed$.subscribe(
       (collapsed) => {
         this.isCollapsed = collapsed;
+        // Collapse all submenus when sidebar is collapsed
+        if (collapsed) {
+          this.collapseAllMenus();
+        }
       }
     );
   }
@@ -41,5 +65,32 @@ export class Sidebar implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  toggleSubmenu(item: MenuItem, event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (this.isCollapsed) {
+      return; // Don't toggle when sidebar is collapsed
+    }
+    
+    item.expanded = !item.expanded;
+  }
+
+  private collapseAllMenus(): void {
+    const collapseRecursive = (items: MenuItem[]) => {
+      items.forEach(item => {
+        if (item.childrens) {
+          item.expanded = false;
+          collapseRecursive(item.childrens);
+        }
+      });
+    };
+    collapseRecursive(this.menuItems);
+  }
+
+  hasChildren(item: MenuItem): boolean {
+    return !!item.childrens && item.childrens.length > 0;
   }
 }

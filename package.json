@@ -31,9 +31,12 @@
     "@angular/material": "^20.2.7",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
     "angular-feather": "^6.5.1",
     "bootstrap": "^5.3.8",
     "feather-icons": "^4.29.2",
+    "ngx-material-timepicker": "^13.1.1",
     "ngx-toastr": "^19.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

@@ -1,23 +1,70 @@
 <div class="toolbar">
-    <div class="toolbar-layout">
-        <div class="menu-icon toggle" 
-             (click)="toggleSidebar()" 
-             [class.collapsed]="isCollapsed"
-             [title]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
-            <i-feather name="menu"></i-feather>
-        </div>
-        <div class="toolbar-right">
-            <div class="user-info dropdown">
-                <a class="dropdown-toggle d-flex align-items-center" href="#" role="button" id="toolbarUserDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i-feather name="user"></i-feather>
-                    <span class="ms-2">{{ userName }}</span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="toolbarUserDropdown">
-                    <li><a class="dropdown-item" (click)="goToProfile()">Profile</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger" (click)="logoutAPI()">Logout</a></li>
-                </ul>
-            </div>
-        </div>
+  <div class="toolbar-layout">
+    <div
+      class="menu-icon toggle"
+      (click)="toggleSidebar()"
+      [class.collapsed]="isCollapsed"
+      [title]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+    >
+      <i-feather name="menu"></i-feather>
     </div>
+    <div class="toolbar-right">
+      <!-- Language Switcher Dropdown -->
+      <div class="language-switcher dropdown me-3">
+        <a
+          class="dropdown-toggle d-flex align-items-center"
+          href="#"
+          role="button"
+          id="languageDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span class="flag-icon">{{ getCurrentLanguageFlag() }}</span>
+          <span class="ms-2">{{ getCurrentLanguageLabel() }}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+          <li>
+            <a
+              class="dropdown-item"
+              [class.active]="currentLang === 'en'"
+              (click)="switchLanguage('en')"
+            >
+              <span class="flag-icon">🇺🇸</span>
+              <span class="ms-2">English</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              [class.active]="currentLang === 'vi'"
+              (click)="switchLanguage('vi')"
+            >
+              <span class="flag-icon">🇻🇳</span>
+              <span class="ms-2">Tiếng Việt</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- User Info Dropdown -->
+      <div class="user-info dropdown">
+        <a
+          class="dropdown-toggle d-flex align-items-center"
+          href="#"
+          role="button"
+          id="toolbarUserDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i-feather name="user"></i-feather>
+          <span class="ms-2">{{ userName }}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="toolbarUserDropdown">
+          <li><a class="dropdown-item" (click)="goToProfile()">Profile</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item text-danger" (click)="logoutAPI()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>

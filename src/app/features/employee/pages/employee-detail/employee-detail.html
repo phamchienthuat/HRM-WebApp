@@ -1,1 +1,554 @@
-<p>employee-detail works!</p>
+<div class="main-content">
+  <div class="breadcumb-layout">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/employees">{{ 'employee.employees' | translate }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ model.firstName + ' ' + model.lastName || 'Employee Detail' }}</li>
+      </ol>
+    </nav>
+    <div class="button-tool-group">
+      <button class="button button-outline_item">
+        <i-feather name="arrow-left" class="me-1"></i-feather>
+        {{ 'button.back' | translate }}
+      </button>
+      <button class="button button_item" >
+        <i-feather name="edit-2" class="me-1"></i-feather>
+        {{ 'button.edit' | translate }}
+      </button>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-lg-3">
+        <div class="card-left">
+          <div class="avatar">
+            <img [src]="'assets/images/avatar.png'" alt="Employee Photo" />
+          </div>
+          <div class="employee-info">
+            <h4>{{ model.firstName + ' ' + model.lastName || 'Nguyen Van A' }}</h4>
+            <p>
+              <a href="mailto:{{ model.emailCompany || 'nguyenvana@example.com' }}">{{
+                model.emailCompany || 'nguyenvana@example.com'
+              }}</a>
+            </p>
+            <p>{{ model.positionName || 'Position Name' }}</p>
+            <p>{{ model.departmentName || 'Department Name' }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-9">
+        <div class="card-right">
+          <form action="editForm" [formGroup]="editForm" novalidate>
+            <mat-tab-group>
+              <mat-tab [label]="'Overview' | translate">
+                <div class="tab-content">
+                  <h5>{{ 'Overview' | translate }}</h5>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'form.code' | translate"
+                        [(ngModel)]="model.code"
+                        [control]="$any(editForm.get('code'))"
+                        formControlName="code"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      ></mdl-input>
+                      <span
+                        class="input-error"
+                        *ngIf="
+                          editForm.get('code')!.hasError('incorrect') &&
+                          !editForm.get('code')!.untouched
+                        "
+                      >
+                        {{ 'form.invalidFormat' | translate }}
+                      </span>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'First Name' | translate"
+                        [(ngModel)]="model.firstName"
+                        [control]="$any(editForm.get('firstName'))"
+                        formControlName="firstName"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      ></mdl-input>
+                      <span
+                        class="input-error"
+                        *ngIf="
+                          editForm.get('firstName')!.hasError('incorrect') &&
+                          !editForm.get('firstName')!.untouched
+                        "
+                      >
+                        {{ 'form.invalidFormat' | translate }}
+                      </span>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Last Name' | translate"
+                        [(ngModel)]="model.lastName"
+                        [control]="$any(editForm.get('lastName'))"
+                        formControlName="lastName"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      ></mdl-input>
+                      <span
+                        class="input-error"
+                        *ngIf="
+                          editForm.get('lastName')!.hasError('incorrect') &&
+                          !editForm.get('lastName')!.untouched
+                        "
+                      >
+                        {{ 'form.invalidFormat' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Email' | translate"
+                        [(ngModel)]="model.email"
+                        [control]="$any(editForm.get('email'))"
+                        formControlName="email"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      ></mdl-input>
+                      <span
+                        class="input-error"
+                        *ngIf="
+                          editForm.get('email')!.hasError('incorrect') &&
+                          !editForm.get('email')!.untouched
+                        "
+                      >
+                        {{ 'form.invalidFormat' | translate }}
+                      </span>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Phone' | translate"
+                        [(ngModel)]="model.phone"
+                        [control]="$any(editForm.get('phone'))"
+                        formControlName="phone"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      ></mdl-input>
+                      <span
+                        class="input-error"
+                        *ngIf="
+                          editForm.get('phone')!.hasError('incorrect') &&
+                          !editForm.get('phone')!.untouched
+                        "
+                      >
+                        {{ 'form.invalidFormat' | translate }}
+                      </span>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Gender' | translate"
+                        [(ngModel)]="model.gender"
+                        [options]="lstGender"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('gender'))"
+                        formControlName="gender"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      >
+                      </mdl-select>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-datepicker
+                        [label]="'Date of Birth' | translate"
+                        [(ngModel)]="model.dob"
+                        [control]="$any(editForm.get('dateOfBirth'))"
+                        formControlName="dateOfBirth"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      >
+                      </mdl-datepicker>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Position' | translate"
+                        [(ngModel)]="model.positionId"
+                        [options]="lstPosition"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('positionId'))"
+                        formControlName="positionId"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      >
+                      </mdl-select>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Department' | translate"
+                        [(ngModel)]="model.departmentId"
+                        [options]="lstDepartment"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('departmentId'))"
+                        formControlName="departmentId"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      >
+                      </mdl-select>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Facebook' | translate"
+                        [(ngModel)]="model.facebook"
+                        [control]="$any(editForm.get('facebook'))"
+                        formControlName="facebook"
+                      ></mdl-input>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'LinkedIn' | translate"
+                        [(ngModel)]="model.linkedin"
+                        [control]="$any(editForm.get('linkedin'))"
+                        formControlName="linkedin"
+                      ></mdl-input>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Size Clother' | translate"
+                        [(ngModel)]="model.sizeClother"
+                        [control]="$any(editForm.get('sizeClother'))"
+                        formControlName="sizeClother"
+                      ></mdl-input>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Nationality' | translate"
+                        [(ngModel)]="model.nationality"
+                        [options]="lstNationality"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('nationality'))"
+                        formControlName="nationality"
+                      ></mdl-select>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Religion' | translate"
+                        [(ngModel)]="model.religion"
+                        [options]="lstReligion"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('religion'))"
+                        formControlName="religion"
+                      ></mdl-select>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-datepicker
+                        [label]="'Onboard Date' | translate"
+                        [(ngModel)]="model.onboardDate"
+                        [control]="$any(editForm.get('onboardDate'))"
+                        formControlName="onboardDate"
+                      >
+                      </mdl-datepicker>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-datepicker
+                        [label]="'Offboard Date' | translate"
+                        [(ngModel)]="model.offboardDate"
+                        [control]="$any(editForm.get('offboardDate'))"
+                        formControlName="offboardDate"
+                      >
+                      </mdl-datepicker>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Status' | translate"
+                        [(ngModel)]="model.status"
+                        [options]="lstStatus"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('status'))"
+                        formControlName="status"
+                      ></mdl-select>
+                    </div>
+                  </div>
+                  <h5>{{ 'employee.information' | translate }}</h5>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'National' | translate"
+                        [(ngModel)]="model.nationalId"
+                        [control]="$any(editForm.get('nationalId'))"
+                        formControlName="nationalId"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      ></mdl-input>
+                      <span
+                        class="input-error"
+                        *ngIf="
+                          editForm.get('nationalId')!.hasError('incorrect') &&
+                          !editForm.get('nationalId')!.untouched
+                        "
+                      >
+                        {{ 'form.invalidFormat' | translate }}
+                      </span>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'National Create Date' | translate"
+                        [(ngModel)]="model.nationalCreatedDate"
+                        [control]="$any(editForm.get('nationalCreatedDate'))"
+                        formControlName="nationalCreatedDate"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      ></mdl-input>
+                      <span
+                        class="input-error"
+                        *ngIf="
+                          editForm.get('nationalCreatedDate')!.hasError('incorrect') &&
+                          !editForm.get('nationalCreatedDate')!.untouched
+                        "
+                      >
+                        {{ 'form.invalidFormat' | translate }}
+                      </span>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'National Created Place' | translate"
+                        [(ngModel)]="model.nationalAddress"
+                        [control]="$any(editForm.get('nationalAddress'))"
+                        formControlName="nationalAddress"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      ></mdl-input>
+                      <span
+                        class="input-error"
+                        *ngIf="
+                          editForm.get('nationalAddress')!.hasError('incorrect') &&
+                          !editForm.get('nationalAddress')!.untouched
+                        "
+                      >
+                        {{ 'form.invalidFormat' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Marital Status' | translate"
+                        [(ngModel)]="model.maritalStatus"
+                        [control]="$any(editForm.get('maritalStatus'))"
+                        formControlName="maritalStatus"
+                      ></mdl-input>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Emergency Contact' | translate"
+                        [(ngModel)]="model.emergencyContact"
+                        [control]="$any(editForm.get('emergencyContact'))"
+                        formControlName="emergencyContact"
+                        [required]="true"
+                        [requiredMessage]="'form.required' | translate"
+                      ></mdl-input>
+                      <span
+                        class="input-error"
+                        *ngIf="
+                          editForm.get('emergencyContact')!.hasError('incorrect') &&
+                          !editForm.get('emergencyContact')!.untouched
+                        "
+                      >
+                        {{ 'form.invalidFormat' | translate }}
+                      </span>
+                    </div>
+                  </div>
+                  <h5>{{ 'Hometown' | translate }}</h5>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Province/City' | translate"
+                        [(ngModel)]="model.hometownProvinceId"
+                        [options]="lstProvince"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('hometownProvinceId'))"
+                        formControlName="hometownProvinceId"
+                      ></mdl-select>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Commune/District' | translate"
+                        [(ngModel)]="model.hometownCommuneId"
+                        [options]="lstCommune"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('hometownCommuneId'))"
+                        formControlName="hometownCommuneId"
+                      ></mdl-select>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Detail Address' | translate"
+                        [(ngModel)]="model.hometownDetail"
+                        [control]="$any(editForm.get('hometownDetail'))"
+                        formControlName="hometownDetail"
+                      ></mdl-input>
+                    </div>
+                  </div>
+                  <h5>{{ 'Temporary Address' | translate }}</h5>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Province/City' | translate"
+                        [(ngModel)]="model.temporaryAddressProvinceId"
+                        [options]="lstProvince"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('temporaryAddressProvinceId'))"
+                        formControlName="temporaryAddressProvinceId"
+                      ></mdl-select>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Commune/District' | translate"
+                        [(ngModel)]="model.temporaryAddressCommuneId"
+                        [options]="lstCommune"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('temporaryAddressCommuneId'))"
+                        formControlName="temporaryAddressCommuneId"
+                      ></mdl-select>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Detail Address' | translate"
+                        [(ngModel)]="model.temporaryAddressDetail"
+                        [control]="$any(editForm.get('temporaryAddressDetail'))"
+                        formControlName="temporaryAddressDetail"
+                      ></mdl-input>
+                    </div>
+                  </div>
+                  <h5>{{ 'Permanent Address' | translate }}</h5>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Province/City' | translate"
+                        [(ngModel)]="model.permanentAddressProvinceId"
+                        [options]="lstProvince"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('permanentAddressProvinceId'))"
+                        formControlName="permanentAddressProvinceId"
+                      ></mdl-select>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-select
+                        [label]="'Commune/District' | translate"
+                        [(ngModel)]="model.permanentAddressCommuneId"
+                        [options]="lstCommune"
+                        valueField="id"
+                        textField="name"
+                        [control]="$any(editForm.get('permanentAddressCommuneId'))"
+                        formControlName="permanentAddressCommuneId"
+                      ></mdl-select>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Detail Address' | translate"
+                        [(ngModel)]="model.permanentAddressDetail"
+                        [control]="$any(editForm.get('permanentAddressDetail'))"
+                        formControlName="permanentAddressDetail"
+                      ></mdl-input>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab [label]="'Education' | translate">
+                <div class="tab-content">
+                  <h5>{{ 'Education' | translate }}</h5>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Degree' | translate"
+                        [(ngModel)]="model.degree"
+                        [control]="$any(editForm.get('degree'))"
+                        formControlName="degree"
+                      ></mdl-input>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Institution' | translate"
+                        [(ngModel)]="model.institution"
+                        [control]="$any(editForm.get('institution'))"
+                        formControlName="institution"
+                      ></mdl-input>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Major' | translate"
+                        [(ngModel)]="model.major"
+                        [control]="$any(editForm.get('major'))"
+                        formControlName="major"
+                      ></mdl-input>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Graduation Year' | translate"
+                        [(ngModel)]="model.graduationYear"
+                        [control]="$any(editForm.get('graduationYear'))"
+                        formControlName="graduationYear"
+                      ></mdl-input>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab [label]="'Skill' | translate">
+                <div class="tab-content">
+                  <h5>{{ 'Skill' | translate }}</h5>
+                </div>
+              </mat-tab>
+              <mat-tab [label]="'Bank Account' | translate">
+                <div class="tab-content">
+                  <h5>{{ 'Bank Account' | translate }}</h5>
+                  <div class="row mt-3">
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Bank Name' | translate"
+                        [(ngModel)]="model.bankName"
+                        [control]="$any(editForm.get('bankName'))"
+                        formControlName="bankName"
+                      ></mdl-input>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Bank Branch' | translate"
+                        [(ngModel)]="model.bankBranch"
+                        [control]="$any(editForm.get('bankBranch'))"
+                        formControlName="bankBranch"
+                      ></mdl-input>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                      <mdl-input
+                        [label]="'Bank Account' | translate"
+                        [(ngModel)]="model.bankAccount"
+                        [control]="$any(editForm.get('bankAccount'))"
+                        formControlName="bankAccount"
+                      ></mdl-input>
+                    </div>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

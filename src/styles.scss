@@ -1,4 +1,3 @@
-
 // All @use and @import statements must come first
 @use '@angular/material' as mat;
 @use 'assets/scss/index.scss' as *;
@@ -10,35 +9,140 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 
-
 html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: 'Chakra Petch',
+      density: 0,
+    )
+  );
 }
 
 body {
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
   // user's system settings.
-//   color-scheme: light;
+  //   color-scheme: light;
 
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
   // variables at https://material.angular.dev/guide/system-variables
-//   background-color: var(--mat-sys-surface);
-//   color: var(--mat-sys-on-surface);
-//   font: var(--mat-sys-body-medium);
+  //   background-color: var(--mat-sys-surface);
+  //   color: var(--mat-sys-on-surface);
+  //   font: var(--mat-sys-body-medium);
 
   // Reset the user agent margin.
   margin: 0;
 }
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
-body { margin: 0; font-family: 'Chakra Petch', sans-serif;}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: 'Chakra Petch', sans-serif;
+}
 
+a:hover {
+  text-decoration: underline;
+  color: $primary-color;
+}
+
+.main-content {
+  width: 100%;
+  height: 100%;
+  padding: 0 !important;
+}
+
+.mat-mdc-form-field-required-marker.mdc-floating-label--required {
+  color: red;
+}
+
+.breadcumb-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.button-tool-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* CSS button tool */
+.button {
+  appearance: button;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.1) 0 2px 5px 0,
+    rgba(0, 0, 0, 0.07) 0 1px 1px 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 100%;
+  height: 44px;
+  line-height: 1.15;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all 0.5s ease, box-shadow 0.08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  gap: 3px;
+
+  i-feather {
+    width: 18px;
+    height: 18px;
+  }
+
+  // &:disabled {
+  //   cursor: default;
+  // }
+
+  &:hover {
+    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.2) 0 6px 15px 0,
+      rgba(0, 0, 0, 0.1) 0 2px 2px 0, rgba(50, 151, 211, 0.3) 0 0 0 4px;
+  }
+}
+
+.button_item {
+  background-color: $primary-color;
+  color: #fff;
+
+  &:hover {
+    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.2) 0 6px 15px 0,
+      rgba(0, 0, 0, 0.1) 0 2px 2px 0, rgba(50, 151, 211, 0.3) 0 0 0 4px;
+    }
+}
+
+.button-outline_item{
+  background-color: transparent;
+  border: 1.5px solid $primary-color;
+  color: $primary-color;
+
+  &:hover {
+    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.2) 0 6px 15px 0,
+      rgba(0, 0, 0, 0.1) 0 2px 2px 0, rgba(50, 151, 211, 0.3) 0 0 0 4px;
+    background-color: $primary-color;
+    color: #ffffff;
+  }
+}

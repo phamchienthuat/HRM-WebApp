@@ -6,23 +6,26 @@ import { NotificationService } from '../../../shared/services/notification.servi
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { BaseHttpService } from '../../../core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-toolbar',
-  imports: [IconsModule, CommonModule],
+  imports: [IconsModule, CommonModule, TranslateModule],
   templateUrl: './toolbar.html',
-  styleUrl: './toolbar.scss'
+  styleUrl: './toolbar.scss',
 })
 export class Toolbar implements OnInit, OnDestroy {
   userName = '';
   isCollapsed = false;
+  currentLang = 'en';
   private subscription?: Subscription;
 
   constructor(
-    private sidebarService: SidebarService, 
-    private router: Router, 
+    private sidebarService: SidebarService,
+    private router: Router,
     private httpService: BaseHttpService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    public translate: TranslateService
   ) {
     let userName = localStorage.getItem('user') || '';
     try {
@@ -30,14 +33,26 @@ export class Toolbar implements OnInit, OnDestroy {
     } catch (e) {
       this.userName = userName;
     }
+
+    // Get current language
+    this.currentLang =
+      this.translate.currentLang || localStorage.getItem('selectedLanguage') || 'en';
   }
 
   ngOnInit(): void {
-    this.subscription = this.sidebarService.isCollapsed$.subscribe(
-      (collapsed) => {
-        this.isCollapsed = collapsed;
-      }
-    );
+    this.subscription = this.sidebarService.isCollapsed$.subscribe((collapsed) => {
+      this.isCollapsed = collapsed;
+    });
+
+    // Subscribe to language changes to keep currentLang in sync
+    this.translate.onLangChange.subscribe((event) => {
+      this.currentLang = event.lang;
+    });
+
+    // Set initial language from TranslateService
+    if (this.translate.currentLang) {
+      this.currentLang = this.translate.currentLang;
+    }
   }
 
   ngOnDestroy(): void {
@@ -50,14 +65,35 @@ export class Toolbar implements OnInit, OnDestroy {
     this.sidebarService.toggleSidebar();
   }
 
+  switchLanguage(lang: string) {
+    this.currentLang = lang;
+    this.translate.use(lang);
+    localStorage.setItem('selectedLanguage', lang);
+    this.notification.success(
+      `Language changed to ${lang === 'en' ? 'English' : 'Vietnamese'}`,
+      'Language'
+    );
+  }
+
+  getCurrentLanguageLabel(): string {
+    return this.currentLang === 'en' ? 'English' : 'Tiếng Việt';
+  }
+
+  getCurrentLanguageFlag(): string {
+    return this.currentLang === 'en' ? '🇺🇸' : '🇻🇳';
+  }
+
   goToProfile() {
-    this.router.navigate(['/auth/profile']).then(() => {
-      this.notification.info('Navigating to profile page', 'Profile');
-    }).catch(() => {
-      this.router.navigate(['/profile']).catch(() => {
-        this.notification.warning('Profile page not found', 'Navigation');
+    this.router
+      .navigate(['/auth/profile'])
+      .then(() => {
+        this.notification.info('Navigating to profile page', 'Profile');
+      })
+      .catch(() => {
+        this.router.navigate(['/profile']).catch(() => {
+          this.notification.warning('Profile page not found', 'Navigation');
+        });
       });
-    });
   }
 
   logout() {
@@ -73,7 +109,7 @@ export class Toolbar implements OnInit, OnDestroy {
 
   logoutAPI() {
     const loadingId = this.notification.loading('Logging out...', 'Please wait');
-    
+
     this.httpService.post('/api/auth/logout', {}).subscribe({
       next: () => {
         this.notification.remove(loadingId);
@@ -84,7 +120,7 @@ export class Toolbar implements OnInit, OnDestroy {
         this.notification.httpError(err, 'Logout API failed, proceeding with local logout');
         console.error('Logout API failed', err);
         this.logout();
-      }
+      },
     });
   }
 }
