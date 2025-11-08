@@ -20,6 +20,12 @@ html {
       density: 0,
     )
   );
+
+  // Override Material primary color with your custom color
+  --mat-sys-primary: #{$primary-color};
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #d5e3ff;
+  --mat-sys-on-primary-container: #001a41;
 }
 
 body {
@@ -131,10 +137,10 @@ a:hover {
   &:hover {
     box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.2) 0 6px 15px 0,
       rgba(0, 0, 0, 0.1) 0 2px 2px 0, rgba(50, 151, 211, 0.3) 0 0 0 4px;
-    }
+  }
 }
 
-.button-outline_item{
+.button-outline_item {
   background-color: transparent;
   border: 1.5px solid $primary-color;
   color: $primary-color;
