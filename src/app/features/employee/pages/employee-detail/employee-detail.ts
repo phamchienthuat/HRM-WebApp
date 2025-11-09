@@ -66,6 +66,10 @@ export class EmployeeDetail implements OnInit {
     { id: 2, name: 'Inactive' }
   ];
 
+  fileName: string = '';
+  avatarUrl: string = 'assets/images/avatar.png';
+  showPreview: boolean = false;
+
   constructor(private formBuilder: FormBuilder, public translate: TranslateService) {
     this.editForm = this.formBuilder.group({
       code: ['', [Validators.required]],
@@ -99,6 +103,7 @@ export class EmployeeDetail implements OnInit {
       permanentAddressCommuneId: [''],
       permanentAddressProvinceId: [''],
       permanentAddressDetail: [''],
+      avatarUrl: [''],
 
       // education
       degree: [''],
@@ -123,5 +128,23 @@ export class EmployeeDetail implements OnInit {
   // Method to switch language
   switchLanguage(lang: string) {
     this.translate.use(lang);
+  }
+
+  onFileSelected(event: any) {
+    debugger
+    const file: File = event.target.files[0];
+    if (file) {
+      this.fileName = file.name;
+      const formData = new FormData();
+      formData.append("thumbnail", file);
+    }
+  }
+
+  openImagePreview() {
+    this.showPreview = true;
+  }
+
+  closePreview() {
+    this.showPreview = false;
   }
 }

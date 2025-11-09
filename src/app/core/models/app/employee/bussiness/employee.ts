@@ -34,6 +34,7 @@ export class EmployeeDetailModel {
   permanentAddressCommuneId?: number; // thường trú
   permanentAddressProvinceId?: number; // thường trú
   permanentAddressDetail?: string; // thường trú
+  avatarUrl?: string;
 
   // education
   degree?: string;

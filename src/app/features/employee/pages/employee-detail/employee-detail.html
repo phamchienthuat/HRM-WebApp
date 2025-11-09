@@ -22,9 +22,26 @@
       <div class="col-12 col-lg-3">
         <div class="card-left">
           <div class="avatar">
-            <img [src]="'assets/images/avatar.png'" alt="Employee Photo" />
-          </div>
-          <div class="employee-info">
+            <img [src]="avatarUrl" alt="Employee Photo" />
+            <div class="overlay">
+              <i-feather name="camera" title="change image" (click)="fileUpload.click()">
+                <span class="overlay-text">Change Photo</span>
+              </i-feather>
+              <hr>
+              <i-feather name="eye" title="view image" (click)="openImagePreview()">
+                <span class="overlay-text">View Photo</span>
+              </i-feather>
+            </div>
+            <input type="file" class="file-input"
+                (change)="onFileSelected($event)" #fileUpload>
+            <!-- Modal Preview -->
+            <div class="image-preview-backdrop" *ngIf="showPreview" (click)="closePreview()">
+              <div class="image-preview" (click)="$event.stopPropagation()">
+                <img [src]="avatarUrl" alt="Employee Full Photo" />
+                <button class="close-btn" (click)="closePreview()"><i-feather name="x"></i-feather></button>
+              </div>
+            </div>
+            <div class="employee-info">
             <h4>{{ model.firstName + ' ' + model.lastName || 'Nguyen Van A' }}</h4>
             <p>
               <a href="mailto:{{ model.emailCompany || 'nguyenvana@example.com' }}">{{
@@ -34,6 +51,7 @@
             <p>{{ model.positionName || 'Position Name' }}</p>
             <p>{{ model.departmentName || 'Department Name' }}</p>
           </div>
+        </div>
         </div>
       </div>
       <div class="col-12 col-lg-9">
