@@ -41,7 +41,8 @@
                 <button class="close-btn" (click)="closePreview()"><i-feather name="x"></i-feather></button>
               </div>
             </div>
-            <div class="employee-info">
+          </div>
+          <div class="employee-info">
             <h4>{{ model.firstName + ' ' + model.lastName || 'Nguyen Van A' }}</h4>
             <p>
               <a href="mailto:{{ model.emailCompany || 'nguyenvana@example.com' }}">{{
@@ -51,7 +52,6 @@
             <p>{{ model.positionName || 'Position Name' }}</p>
             <p>{{ model.departmentName || 'Department Name' }}</p>
           </div>
-        </div>
         </div>
       </div>
       <div class="col-12 col-lg-9">
